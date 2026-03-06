@@ -1,4 +1,4 @@
-# CareerFit AI 🎯
+# CareerFit AI 
 ### Free AI Job Match Analyzer — No Signup, No Credit Card, No Cost
 
 > Built for students. Zero friction. Just paste and go.
@@ -13,7 +13,7 @@
 
 ---
 
-## 🤔 The Problem
+## The Problem
 
 Students spend hours applying to jobs blindly:
 - No idea if your resume matches the JD
@@ -25,21 +25,21 @@ Students spend hours applying to jobs blindly:
 
 ---
 
-## ✨ What You Get
+## What You Get
 
 | Feature | Description |
 |---|---|
-| 🎯 **Match Score 0–100** | How well your resume fits this specific role |
-| ✅ **Strengths** | What makes you a strong candidate |
-| ⚠️ **Gap Detection** | Exactly what you're missing |
-| 🔑 **Keyword Analysis** | ATS keywords matched vs missing |
-| 🌍 **Visa Risk Check** | Will they sponsor? Honest upfront answer |
-| ✍️ **Cover Pitch** | Personalized 3-4 sentence pitch, ready to copy |
-| 💡 **Resume Tips** | How to tailor your resume for this exact role |
+| **Match Score 0–100** | How well your resume fits this specific role |
+| **Strengths** | What makes you a strong candidate |
+| **Gap Detection** | Exactly what you're missing |
+| **Keyword Analysis** | ATS keywords matched vs missing |
+| **Visa Risk Check** | Will they sponsor? Honest upfront answer |
+| **Cover Pitch** | Personalized 3-4 sentence pitch, ready to copy |
+| **Resume Tips** | How to tailor your resume for this exact role |
 
 ---
 
-## 🚀 Deploy in 5 Minutes (Free)
+## Deploy in 5 Minutes (Free)
 
 ### Step 1 — Get a free Groq API key
 1. Go to **[console.groq.com](https://console.groq.com)**
@@ -56,7 +56,7 @@ Students spend hours applying to jobs blindly:
    Name:  GROQ_API_KEY
    Value: gsk_your_key_here
    ```
-5. Click **Deploy** → Done! 🎉
+5. Click **Deploy** → Done! 
 
 Your site is live at `https://your-project.vercel.app`
 
@@ -64,7 +64,7 @@ Your site is live at `https://your-project.vercel.app`
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 careerfit-ai/
@@ -78,7 +78,7 @@ careerfit-ai/
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ```
 Frontend   →  Vanilla HTML + CSS + JS  (zero dependencies)
@@ -88,14 +88,14 @@ Hosting    →  Vercel                   (free)
 ```
 
 **Why Groq?**
-- ✅ Free tier — no credit card required
-- ✅ Llama 3.3 70B — high quality open-source model
-- ✅ Blazing fast inference (~2-3 seconds per analysis)
-- ✅ Generous rate limits for student use
+- Free tier — no credit card required
+- Llama 3.3 70B — high quality open-source model
+- Blazing fast inference (~2-3 seconds per analysis)
+- Generous rate limits for student use
 
 ---
 
-## 💻 Run Locally
+## Run Locally
 
 ```bash
 # Clone
@@ -116,7 +116,7 @@ Open `http://localhost:3000`
 
 ---
 
-## 🌍 Why This Matters for Students
+## Why This Matters for Students
 
 - **International students (F1/OPT)** get instant visa risk warnings
 - **New grads** stop wasting time on poor-fit roles
@@ -127,7 +127,7 @@ Jobscan charges **$50/month** for similar features. This is **free forever**.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Ideas for improvements:
 - [ ] PDF resume upload & parsing
@@ -141,13 +141,13 @@ PRs welcome! Open an issue first to discuss.
 
 ---
 
-## 📄 License
+## License
 
 MIT — free to use, fork, and deploy for any student or nonprofit purpose.
 
 ---
 
-## 👩‍💻 Built By
+## Built By
 
 **Sri Harshini Vemula** · Software Engineer & AI/ML Specialist
 
