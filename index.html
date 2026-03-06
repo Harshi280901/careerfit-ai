@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CareerFit AI — Free Job Match Analyzer for Students</title>
+<meta name="description" content="Free AI-powered job match analyzer. Paste your resume + any job description and get your match score, keyword gaps, visa risk, and a personalized pitch instantly."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f5f2ec;
+  --bg2: #ede9e0;
+  --ink: #1a1612;
+  --ink2: #4a4540;
+  --ink3: #8a8278;
+  --accent: #d4421a;
+  --accent2: #f0a500;
+  --green: #2d7a4f;
+  --blue: #1a4fa0;
+  --border: rgba(26,22,18,0.12);
+  --card: #ffffff;
+  --shadow: 0 2px 20px rgba(26,22,18,0.08);
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0;
+}
+
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(245,242,236,0.94);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px;
+}
+
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 18px;
+  letter-spacing: -0.02em; color: var(--ink);
+  display: flex; align-items: center; gap: 8px;
+}
+
+.logo-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.5); opacity: 0.6; }
+}
+
+.free-badge {
+  background: var(--green); color: white;
+  font-size: 11px; font-weight: 700;
+  padding: 3px 12px; border-radius: 20px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+
+/* HERO */
+.hero {
+  position: relative; z-index: 1;
+  max-width: 1000px; margin: 0 auto;
+  padding: 64px 32px 48px;
+  text-align: center;
+}
+
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.2em;
+  color: var(--accent); text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.hero-tag::before, .hero-tag::after {
+  content: ''; display: inline-block;
+  width: 20px; height: 1.5px; background: var(--accent);
+}
+
+h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(32px, 5.5vw, 60px);
+  font-weight: 800; line-height: 1.06;
+  letter-spacing: -0.03em; color: var(--ink);
+  margin-bottom: 18px;
+}
+
+h1 em {
+  font-style: italic; color: var(--accent);
+  font-family: 'Instrument Sans', sans-serif; font-weight: 400;
+}
+
+.hero-sub {
+  font-size: 17px; color: var(--ink2); line-height: 1.7;
+  max-width: 560px; margin: 0 auto 32px;
+}
+
+.hero-pills {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+  margin-bottom: 48px;
+}
+
+.pill {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 6px 16px;
+  font-size: 13px; color: var(--ink2);
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* TOOL */
+.tool-wrap {
+  position: relative; z-index: 1;
+  max-width: 1000px; margin: 0 auto;
+  padding: 0 32px 80px;
+}
+
+.tool-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.tool-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+
+.panel {
+  padding: 32px;
+}
+
+.panel:first-child { border-right: 1px solid var(--border); }
+
+.panel-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+  color: var(--ink3); text-transform: uppercase;
+  margin-bottom: 18px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.panel-label .step-badge {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--ink); color: white;
+  font-size: 10px; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.field { margin-bottom: 18px; }
+.field-label {
+  font-size: 12px; font-weight: 600; color: var(--ink2);
+  margin-bottom: 7px;
+}
+
+textarea, input[type=text], select {
+  width: 100%; border: 1px solid var(--border);
+  border-radius: 11px; padding: 12px 15px;
+  font-family: inherit; font-size: 13px;
+  color: var(--ink); background: var(--bg);
+  outline: none; transition: border-color 0.2s, background 0.2s;
+  line-height: 1.6;
+}
+
+textarea { resize: vertical; }
+textarea:focus, input:focus, select:focus {
+  border-color: var(--accent); background: white;
+}
+textarea::placeholder, input::placeholder { color: var(--ink3); }
+
+.resume-area { min-height: 220px; }
+.jd-area { min-height: 200px; }
+
+select {
+  appearance: none; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 5 5-5' stroke='%238a8278' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 13px center;
+}
+
+.tool-footer {
+  padding: 22px 32px;
+  border-top: 1px solid var(--border);
+  background: var(--bg2);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+
+.footer-note {
+  font-size: 12px; color: var(--ink3); line-height: 1.5;
+}
+
+.footer-note strong { color: var(--green); }
+
+.analyze-btn {
+  background: var(--ink); color: white;
+  border: none; border-radius: 12px;
+  padding: 14px 36px; font-size: 14px; font-weight: 700;
+  font-family: inherit; cursor: pointer;
+  transition: all 0.2s; letter-spacing: 0.03em;
+  white-space: nowrap; flex-shrink: 0;
+}
+
+.analyze-btn:hover:not(:disabled) {
+  background: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212,66,26,0.28);
+}
+
+.analyze-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+/* LOADING */
+#loading {
+  display: none; padding: 60px 32px; text-align: center;
+}
+#loading.show { display: block; }
+
+.spinner {
+  width: 44px; height: 44px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+  margin: 0 auto 18px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loading-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px; font-weight: 700; color: var(--ink);
+}
+
+.loading-steps {
+  margin-top: 20px;
+  display: flex; flex-direction: column; gap: 8px;
+  max-width: 280px; margin: 18px auto 0;
+}
+.loading-step {
+  font-size: 13px; color: var(--ink3);
+  opacity: 0; animation: fadeIn 0.4s ease forwards;
+}
+.loading-step:nth-child(1) { animation-delay: 0.4s; }
+.loading-step:nth-child(2) { animation-delay: 1.1s; }
+.loading-step:nth-child(3) { animation-delay: 1.9s; }
+.loading-step:nth-child(4) { animation-delay: 2.7s; }
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* ERROR */
+.error-box {
+  display: none; margin-top: 16px;
+  padding: 14px 18px;
+  background: rgba(212,66,26,0.07); border: 1px solid rgba(212,66,26,0.2);
+  border-radius: 10px; font-size: 13px; color: var(--accent);
+}
+.error-box.show { display: block; }
+
+/* RESULTS */
+#results {
+  display: none; margin-top: 20px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 24px; overflow: hidden;
+  box-shadow: var(--shadow);
+  animation: slideUp 0.4s ease;
+}
+#results.show { display: block; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.results-header {
+  background: var(--ink); color: white;
+  padding: 24px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.results-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 17px; font-weight: 700;
+}
+
+.results-sub { font-size: 12px; opacity: 0.5; margin-top: 2px; }
+
+.score-circle {
+  width: 70px; height: 70px; border-radius: 50%;
+  border: 3px solid currentColor;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+}
+.score-circle .n { font-size: 22px; font-weight: 800; line-height: 1; }
+.score-circle .p { font-size: 9px; opacity: 0.6; }
+
+.visa-strip {
+  padding: 14px 32px 0;
+}
+
+.visa-banner {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 18px; border-radius: 10px;
+}
+.visa-banner.none, .visa-banner.low {
+  background: rgba(45,122,79,0.08); border: 1px solid rgba(45,122,79,0.2);
+}
+.visa-banner.medium {
+  background: rgba(240,165,0,0.09); border: 1px solid rgba(240,165,0,0.22);
+}
+.visa-banner.high {
+  background: rgba(212,66,26,0.07); border: 1px solid rgba(212,66,26,0.18);
+}
+.visa-pill {
+  font-size: 10px; font-weight: 800; letter-spacing: 0.08em;
+  padding: 4px 12px; border-radius: 20px; flex-shrink: 0;
+  text-transform: uppercase;
+}
+.visa-banner.none .visa-pill, .visa-banner.low .visa-pill { background: var(--green); color: white; }
+.visa-banner.medium .visa-pill { background: var(--accent2); color: white; }
+.visa-banner.high .visa-pill { background: var(--accent); color: white; }
+.visa-note-text { font-size: 13px; color: var(--ink2); }
+
+.summary-section {
+  padding: 22px 32px 0;
+}
+.section-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+  color: var(--ink3); text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.summary-text {
+  font-size: 14px; color: var(--ink2); line-height: 1.8;
+}
+
+.three-col {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  border-top: 1px solid var(--border); margin-top: 20px;
+}
+
+.res-col {
+  padding: 24px 26px;
+  border-right: 1px solid var(--border);
+}
+.res-col:last-child { border-right: none; }
+
+.check-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.check-list li {
+  font-size: 13px; color: var(--ink2);
+  display: flex; gap: 8px; line-height: 1.5; align-items: flex-start;
+}
+.check-list li::before { flex-shrink: 0; margin-top: 1px; font-weight: 700; }
+.check-list.good li::before { content: '✓'; color: var(--green); }
+.check-list.warn li::before { content: '△'; color: var(--accent2); }
+.check-list.tips li::before { content: '◈'; color: var(--blue); }
+
+.keywords-section {
+  padding: 24px 32px;
+  border-top: 1px solid var(--border);
+}
+.kw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 12px; }
+.kw-sublabel { font-size: 11px; font-weight: 700; margin-bottom: 8px; }
+.kw-sublabel.good { color: var(--green); }
+.kw-sublabel.bad { color: var(--accent); }
+.tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  font-size: 11px; padding: 4px 10px; border-radius: 6px; font-weight: 500;
+}
+.tag-green { background: rgba(45,122,79,0.1); color: var(--green); border: 1px solid rgba(45,122,79,0.2); }
+.tag-red { background: rgba(212,66,26,0.08); color: var(--accent); border: 1px solid rgba(212,66,26,0.15); }
+
+.pitch-section {
+  padding: 24px 32px;
+  border-top: 1px solid var(--border);
+}
+.pitch-box {
+  background: var(--bg); border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 12px; padding: 18px 22px;
+  font-size: 14px; color: var(--ink2); line-height: 1.8;
+  font-style: italic; margin-top: 10px;
+}
+.copy-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 12px; padding: 8px 18px;
+  background: transparent; border: 1px solid var(--border);
+  border-radius: 8px; font-size: 12px; font-weight: 600;
+  color: var(--ink2); cursor: pointer; font-family: inherit;
+  transition: all 0.2s;
+}
+.copy-btn:hover { background: var(--ink); color: white; border-color: var(--ink); }
+
+/* HOW */
+.how-section {
+  background: var(--ink); padding: 70px 32px;
+  position: relative; z-index: 1;
+}
+.how-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(22px, 3vw, 32px); font-weight: 800;
+  color: white; text-align: center; margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.how-sub {
+  text-align: center; color: rgba(255,255,255,0.45);
+  font-size: 14px; margin-bottom: 48px;
+}
+.steps {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 20px; max-width: 1000px; margin: 0 auto;
+}
+.step {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px; padding: 24px 20px;
+}
+.step-n {
+  font-family: 'Syne', sans-serif;
+  font-size: 44px; font-weight: 800;
+  color: rgba(255,255,255,0.07); line-height: 1; margin-bottom: 10px;
+}
+.step-t { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: white; margin-bottom: 7px; }
+.step-d { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+footer {
+  background: var(--bg2); border-top: 1px solid var(--border);
+  padding: 28px 32px; text-align: center;
+  font-size: 12px; color: var(--ink3);
+  position: relative; z-index: 1;
+}
+footer a { color: var(--accent); text-decoration: none; }
+footer strong { color: var(--ink2); }
+
+@media (max-width: 860px) {
+  .tool-grid { grid-template-columns: 1fr; }
+  .panel:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+  .three-col { grid-template-columns: 1fr; }
+  .res-col { border-right: none; border-bottom: 1px solid var(--border); }
+  .res-col:last-child { border-bottom: none; }
+  .steps { grid-template-columns: 1fr 1fr; }
+  .tool-footer { flex-direction: column; align-items: flex-start; }
+  .analyze-btn { width: 100%; text-align: center; }
+  .kw-grid { grid-template-columns: 1fr; }
+  .results-header { flex-direction: column; gap: 16px; align-items: flex-start; }
+}
+@media (max-width: 500px) {
+  .steps { grid-template-columns: 1fr; }
+  .hero { padding: 40px 20px 32px; }
+  .tool-wrap { padding: 0 20px 60px; }
+  header { padding: 0 20px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-dot"></span>
+    CareerFit AI
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <span class="free-badge">100% Free</span>
+    <span style="font-size:13px;color:var(--ink3);display:none;" id="headerSub">No signup needed</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-tag">AI Career Intelligence</div>
+  <h1>Know your <em>exact fit</em><br/>before you apply</h1>
+  <p class="hero-sub">
+    Paste your resume and any job description. Get your match score, keyword gaps, 
+    visa risk, and a personalized pitch — completely free, no signup, no credit card.
+  </p>
+  <div class="hero-pills">
+    <span class="pill">⚡ Results in under 10 seconds</span>
+    <span class="pill">🔒 Your data is never stored</span>
+    <span class="pill">🌍 Works for any country & visa status</span>
+    <span class="pill">🎓 Built for students</span>
+  </div>
+</section>
+
+<section class="tool-wrap">
+  <div class="tool-card">
+    <div class="tool-grid">
+
+      <!-- Resume -->
+      <div class="panel">
+        <div class="panel-label">
+          <span class="step-badge">1</span> Your Resume
+        </div>
+
+        <div class="field">
+          <div class="field-label">Paste your resume text *</div>
+          <textarea id="resumeText" class="resume-area"
+            placeholder="Paste your full resume here...&#10;&#10;Include: work experience, skills, education, projects, certifications&#10;&#10;The more detail, the more accurate your analysis!"></textarea>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Your visa / work status</div>
+          <select id="visaStatus">
+            <option value="us_citizen">🇺🇸 US Citizen</option>
+            <option value="green_card">💚 Green Card Holder</option>
+            <option value="h1b">🔵 H1B Visa</option>
+            <option value="f1_opt" selected>🎓 F1 OPT (Student)</option>
+            <option value="f1_cpt">🎓 F1 CPT (Student)</option>
+            <option value="l1">🏢 L1 Visa</option>
+            <option value="tn">🍁 TN (Canada/Mexico)</option>
+            <option value="other">❓ Other / Not Sure</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- JD -->
+      <div class="panel">
+        <div class="panel-label">
+          <span class="step-badge">2</span> Job Description
+        </div>
+
+        <div class="field">
+          <div class="field-label">Job title (optional)</div>
+          <input type="text" id="jobTitle" placeholder="e.g. Senior AI Engineer at Google"/>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Paste the full job description *</div>
+          <textarea id="jobDesc" class="jd-area"
+            placeholder="Paste the complete job description here...&#10;&#10;From LinkedIn, Indeed, company website — anywhere!&#10;&#10;Include visa/sponsorship info if mentioned for best results."></textarea>
+        </div>
+
+        <div style="font-size:12px;color:var(--ink3);line-height:1.6;padding:4px 0;">
+          💡 Tip: include the full JD including requirements, nice-to-haves, and any visa info for the most accurate analysis.
+        </div>
+      </div>
+    </div>
+
+    <div class="tool-footer">
+      <div class="footer-note">
+        <strong>✓ 100% free</strong> · No API key needed · No signup · No data stored<br/>
+        Powered by Llama 3.3 70B via Groq · Built for students worldwide
+      </div>
+      <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">
+        ⚡ Analyze My Fit — Free
+      </button>
+    </div>
+  </div>
+
+  <div class="error-box" id="errorBox"></div>
+
+  <!-- Loading -->
+  <div id="loading">
+    <div class="spinner"></div>
+    <div class="loading-title">Analyzing your fit...</div>
+    <div class="loading-steps">
+      <div class="loading-step">📄 Reading your resume...</div>
+      <div class="loading-step">🔍 Parsing job requirements...</div>
+      <div class="loading-step">🤖 Running AI match analysis...</div>
+      <div class="loading-step">✍️ Writing your personalized pitch...</div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div id="results">
+    <div class="results-header">
+      <div>
+        <div class="results-title">Analysis Complete ✓</div>
+        <div class="results-sub" id="resultsSub">Your personalized job fit report</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div>
+          <div style="font-size:10px;opacity:0.45;letter-spacing:0.15em;margin-bottom:4px;text-transform:uppercase;">Match Score</div>
+          <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:600;" id="matchLabel">–</div>
+        </div>
+        <div class="score-circle" id="scoreCircle">
+          <span class="n" id="scoreNum">–</span>
+          <span class="p">/ 100</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="visa-strip" id="visaBanner"></div>
+
+    <div class="summary-section">
+      <div class="section-label">📋 Executive Summary</div>
+      <p class="summary-text" id="summaryText"></p>
+    </div>
+
+    <div class="three-col">
+      <div class="res-col">
+        <div class="section-label">✅ Your Strengths</div>
+        <ul class="check-list good" id="strengthsList"></ul>
+      </div>
+      <div class="res-col">
+        <div class="section-label">⚠️ Gaps to Address</div>
+        <ul class="check-list warn" id="gapsList"></ul>
+      </div>
+      <div class="res-col">
+        <div class="section-label">💡 Resume Tips</div>
+        <ul class="check-list tips" id="tipsList"></ul>
+      </div>
+    </div>
+
+    <div class="keywords-section">
+      <div class="section-label">🔑 Keyword Analysis</div>
+      <div class="kw-grid">
+        <div>
+          <div class="kw-sublabel good">✓ Keywords Matched</div>
+          <div class="tag-list" id="matchedKw"></div>
+        </div>
+        <div>
+          <div class="kw-sublabel bad">✗ Keywords Missing</div>
+          <div class="tag-list" id="missingKw"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pitch-section">
+      <div class="section-label">✍️ Your Personalized Cover Pitch</div>
+      <div class="pitch-box" id="pitchText"></div>
+      <button class="copy-btn" onclick="copyPitch()">⎘ Copy Pitch</button>
+    </div>
+
+    <div style="padding:20px 32px;border-top:1px solid var(--border);text-align:center;">
+      <button onclick="resetForm()" style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 24px;font-size:13px;color:var(--ink2);cursor:pointer;font-family:inherit;font-weight:600;">
+        ↩ Analyze Another Job
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="how-section">
+  <div class="how-title">How it works</div>
+  <div class="how-sub">Simple, accurate, and completely free for every student</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">01</div>
+      <div class="step-t">Paste your resume</div>
+      <div class="step-d">Copy and paste your resume text. No file upload needed, no account required.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">02</div>
+      <div class="step-t">Add the job description</div>
+      <div class="step-d">Paste the full JD from LinkedIn, Indeed, or anywhere. More detail = better results.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">03</div>
+      <div class="step-t">AI analyzes your fit</div>
+      <div class="step-d">Llama 3.3 70B reads both documents and scores you across skills, keywords, and experience.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">04</div>
+      <div class="step-t">Get your action plan</div>
+      <div class="step-d">Score, gaps, visa risk, missing keywords, resume tips, and a ready-to-send pitch.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Built with ❤️ for students everywhere · 
+  Powered by <strong>Llama 3.3 70B</strong> via Groq · 
+  Open source on <a href="https://github.com/sri-harshini/careerfit-ai" target="_blank">GitHub</a> · 
+  <strong>Free forever</strong>
+</footer>
+
+<script>
+function scoreColor(s) {
+  if (s >= 80) return '#2d7a4f';
+  if (s >= 60) return '#c47a00';
+  if (s >= 40) return '#d4421a';
+  return '#b83030';
+}
+
+function copyPitch() {
+  const text = document.getElementById('pitchText').textContent;
+  navigator.clipboard?.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => { btn.innerHTML = '⎘ Copy Pitch'; }, 2000);
+  });
+}
+
+function resetForm() {
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('jobDesc').value = '';
+  document.getElementById('jobTitle').value = '';
+  window.scrollTo({ top: 400, behavior: 'smooth' });
+}
+
+async function analyze() {
+  const resume = document.getElementById('resumeText').value.trim();
+  const jobDescription = document.getElementById('jobDesc').value.trim();
+  const jobTitle = document.getElementById('jobTitle').value.trim();
+  const visaStatus = document.getElementById('visaStatus').value;
+
+  const errorBox = document.getElementById('errorBox');
+  errorBox.classList.remove('show');
+
+  if (!resume) { showError('Please paste your resume text first.'); return; }
+  if (!jobDescription) { showError('Please paste a job description.'); return; }
+
+  const btn = document.getElementById('analyzeBtn');
+  btn.disabled = true;
+  btn.textContent = '⟳ Analyzing...';
+  document.getElementById('loading').classList.add('show');
+  document.getElementById('results').classList.remove('show');
+
+  try {
+    const res = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ resume, jobDescription, jobTitle, visaStatus })
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `Server error ${res.status}`);
+    }
+
+    const data = await res.json();
+    renderResults(data, jobTitle);
+
+  } catch (err) {
+    showError('Analysis failed: ' + err.message + '. Please try again in a moment.');
+  } finally {
+    document.getElementById('loading').classList.remove('show');
+    btn.disabled = false;
+    btn.textContent = '⚡ Analyze My Fit — Free';
+  }
+}
+
+function renderResults(r, jobTitle) {
+  const color = scoreColor(r.matchScore);
+
+  document.getElementById('scoreNum').textContent = r.matchScore;
+  document.getElementById('matchLabel').textContent = r.matchLabel;
+  const circle = document.getElementById('scoreCircle');
+  circle.style.color = color;
+
+  document.getElementById('resultsSub').textContent =
+    jobTitle ? `Analysis for: ${jobTitle}` : 'Your personalized job fit report';
+
+  document.getElementById('summaryText').textContent = r.summary;
+
+  // Visa
+  const risk = (r.visaRisk || 'none').toLowerCase();
+  document.getElementById('visaBanner').innerHTML = `
+    <div class="visa-banner ${risk}">
+      <span class="visa-pill">Visa: ${r.visaRisk || 'Unknown'} Risk</span>
+      <span class="visa-note-text">${r.visaNote}</span>
+    </div>`;
+
+  const makeList = (id, items) => {
+    document.getElementById(id).innerHTML = (items||[]).map(i => `<li>${i}</li>`).join('');
+  };
+  makeList('strengthsList', r.strengths);
+  makeList('gapsList', r.gaps);
+  makeList('tipsList', r.resumeTips);
+
+  document.getElementById('matchedKw').innerHTML =
+    (r.keywordsMatched||[]).map(k => `<span class="tag tag-green">${k}</span>`).join('');
+  document.getElementById('missingKw').innerHTML =
+    (r.keywordsMissing||[]).map(k => `<span class="tag tag-red">${k}</span>`).join('');
+
+  document.getElementById('pitchText').textContent = r.tailoredPitch;
+
+  const resultsEl = document.getElementById('results');
+  resultsEl.classList.add('show');
+  resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function showError(msg) {
+  document.getElementById('loading').classList.remove('show');
+  const box = document.getElementById('errorBox');
+  box.textContent = '⚠ ' + msg;
+  box.classList.add('show');
+  const btn = document.getElementById('analyzeBtn');
+  btn.disabled = false;
+  btn.textContent = '⚡ Analyze My Fit — Free';
+}
+</script>
+</body>
+</html>
